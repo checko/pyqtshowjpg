@@ -1,6 +1,30 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget, QFileDialog
 from PyQt5.QtGui import QPixmap, QColor
+from PyQt5.QtCore import Qt
+
+# Define a function to choose a jpg file 
+def choose_file():
+    # Create a file dialog 
+    dialog = QFileDialog()
+    
+    # Set the file mode to existing file 
+    dialog.setFileMode(QFileDialog.ExistingFile)
+    
+    # Set the filter to jpg files only 
+    dialog.setNameFilter("Images (*.jpg)")
+    
+    # Disable native dialog 
+    dialog.setOption(QFileDialog.DontUseNativeDialog)
+    
+    # Get the selected file name 
+    if dialog.exec_():
+        file_name = dialog.selectedFiles()[0]
+        
+        # Update the label with the chosen image 
+        pixmap = QPixmap(file_name)
+        label.setPixmap(pixmap)
+
 
 def rgb_to_hsl(r, g, b):
     # Convert RGB values to [0, 1] range
@@ -95,5 +119,8 @@ label= MyLabel()
 # Show widget and label 
 widget.show()
 label.show()
+
+# Call choose_file function at startup
+choose_file()
 
 sys.exit(app.exec_())
